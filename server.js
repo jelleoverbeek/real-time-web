@@ -50,12 +50,19 @@ function makePoll(message) {
 
     poll.options.forEach(function (option) {
         html += `<li>
-                    <input id="poll${poll.index}-item${option.index}" type="radio" class="poll" name="poll-${poll.index}" value="${option.value}">
+                    <input id="poll${poll.index}-item${option.index}" type="radio" class="poll-option" name="poll-${poll.index}" value="${option.value}">
                     <label for="poll${poll.index}-item${option.index}">${option.value} <span class="votes">${option.votes}</span></label>
                 </li>`
     });
 
-    return `<ol>${html}</ol>`
+    html = `<form id="poll-${poll.index}">
+                <ol>${html}</ol>
+            </form>`;
+
+    return {
+        obj: poll,
+        html: html
+    }
 }
 
 io.on('connection', function(socket){
@@ -64,10 +71,8 @@ io.on('connection', function(socket){
     });
 
     socket.on('chat poll', function(msg){
-        console.log(polls);
-
-        let html = makePoll(msg);
-        io.emit('chat poll', html);
+        let poll = makePoll(msg);
+        io.emit('chat poll', poll);
     });
 });
 

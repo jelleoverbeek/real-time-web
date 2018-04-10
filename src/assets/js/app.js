@@ -1,7 +1,9 @@
 (function () {
     const socket = io();
 
-    const polls = document.querySelectorAll(".poll");
+    function vote() {
+        console.log(this.id);
+    }
 
     document.querySelector("form").addEventListener("submit", function(ev) {
         ev.preventDefault();
@@ -20,8 +22,16 @@
         document.querySelector("#messages").insertAdjacentHTML('beforeend', `<li>${message}</li>`)
     });
 
-    socket.on('chat poll', function(html){
-        document.querySelector("#messages").insertAdjacentHTML('beforeend', html)
+    socket.on('chat poll', function(poll){
+        document.querySelector("#messages").insertAdjacentHTML('beforeend', poll.html);
+
+
+        let pollEl = document.getElementById("poll-" + poll.obj.index);
+        let pollOptions = pollEl.querySelectorAll(".poll-option");
+
+        pollOptions.forEach(function (pollOption) {
+            pollOption.addEventListener("change", vote, false)
+        });
     });
 
 })();

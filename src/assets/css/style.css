@@ -7,7 +7,7 @@ body {
     font: 1em Helvetica, Arial;
 }
 
-form {
+.text-bar {
     background: #000;
     padding: 3px;
     position: fixed;
@@ -15,14 +15,14 @@ form {
     width: 100%;
 }
 
-form input {
+.text-bar input {
     border: 0;
     padding: 10px;
     width: 90%;
     margin-right: .5%;
 }
 
-form button {
+.text-bar button {
     width: 9%;
     background: rgb(130, 224, 255);
     border: none;
