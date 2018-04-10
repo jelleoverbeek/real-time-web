@@ -53,23 +53,7 @@ function makePoll(message) {
 
     polls.push(poll);
 
-    let html = "";
-
-    poll.options.forEach(function (option) {
-        html += `<li>
-                    <input id="poll${poll.index}-item${option.index}" type="radio" class="poll-option" name="poll-${poll.index}" value="${option.value}">
-                    <label for="poll${poll.index}-item${option.index}">${option.value} <span class="votes">${option.votes}</span></label>
-                </li>`
-    });
-
-    html = `<form id="poll-${poll.index}">
-                <ol>${html}</ol>
-            </form>`;
-
-    return {
-        obj: poll,
-        html: html
-    }
+    return poll
 }
 
 io.on('connection', function(socket){
