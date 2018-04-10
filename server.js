@@ -29,6 +29,7 @@ function getOptions(msg) {
 
     options.forEach(function (option) {
         optionsObjs.push({
+            index: optionsObjs.length,
             value: option,
             votes: 0
         })
@@ -48,7 +49,10 @@ function makePoll(message) {
     let html = "";
 
     poll.options.forEach(function (option) {
-        html += `<li><input type="radio" name="poll-${poll.index}" value="${option.value}">${option.value} <span class="votes">${option.votes}</span></li>`
+        html += `<li>
+                    <input id="poll${poll.index}-item${option.index}" type="radio" class="poll" name="poll-${poll.index}" value="${option.value}">
+                    <label for="poll${poll.index}-item${option.index}">${option.value} <span class="votes">${option.votes}</span></label>
+                </li>`
     });
 
     return `<ol>${html}</ol>`

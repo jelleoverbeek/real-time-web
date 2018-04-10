@@ -1,6 +1,7 @@
 (function () {
     const socket = io();
 
+    const polls = document.querySelectorAll(".poll");
 
     document.querySelector("form").addEventListener("submit", function(ev) {
         ev.preventDefault();
