@@ -2,7 +2,10 @@
 
 {% block content %}
 
-<ul id="messages"></ul>
+<ul id="messages">
+    {% include "components/_poll.html" %}
+</ul>
+
 <form action="">
     <input id="m" autocomplete="off" /><button>Send</button>
 </form>

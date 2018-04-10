@@ -22,6 +22,11 @@ io.on('connection', function(socket){
     socket.on('chat message', function(msg){
         io.emit('chat message', msg);
     });
+
+    socket.on('chat poll', function(msg){
+        console.log(msg);
+        io.emit('chat poll', msg);
+    });
 });
 
 http.listen(3000, function(){
