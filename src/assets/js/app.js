@@ -1,6 +1,15 @@
 (function () {
     const socket = io();
 
+    function updatePoll(poll) {
+        let pollEl = document.getElementById("poll-" + poll.obj.index);
+
+        poll.obj.options.forEach(function (option) {
+            const votesEl = pollEl.querySelector(`#poll${poll.obj.index}-item${option.index} + label .votes`);
+            votesEl.innerText = option.votes;
+        });
+    }
+
     function addEventToPoll(poll) {
         let pollEl = document.getElementById("poll-" + poll.index);
         let pollOptions = pollEl.querySelectorAll(".poll-option");
@@ -12,7 +21,7 @@
         });
     }
 
-    function renderPoll(poll) {
+    function getPollTemplate(poll) {
         let html = "";
 
         poll.options.forEach(function (option) {
@@ -31,14 +40,12 @@
                     </form>
                 </ul>`;
 
-        document.querySelector("#messages").insertAdjacentHTML('beforeend', html);
+        return html
     }
 
     function vote(pollIndex, pollEl) {
         let optionIndex = pollEl.id.split("item");
         optionIndex = optionIndex[1] * 1;
-
-        console.log(optionIndex);
 
         const obj = {
             index: pollIndex,
@@ -62,7 +69,7 @@
     });
 
     socket.on('chat vote', function(poll){
-        console.log(poll)
+        updatePoll(poll);
     });
 
     socket.on('chat message', function(message){
@@ -70,7 +77,8 @@
     });
 
     socket.on('chat poll', function(poll){
-        renderPoll(poll);
+        const message = "<li>" + getPollTemplate(poll) + "</li>";
+        document.querySelector("#messages").insertAdjacentHTML('beforeend', message);
         addEventToPoll(poll);
     });
 

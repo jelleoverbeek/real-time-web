@@ -25,7 +25,12 @@ function setVotes(poll) {
     let currentOption = currentPoll.options[poll.choice];
     currentOption.votes++;
 
-    return currentPoll
+    console.log(currentPoll);
+
+    return {
+        obj: currentPoll,
+        choice: poll.choice
+    }
 }
 
 function getOptions(msg) {
