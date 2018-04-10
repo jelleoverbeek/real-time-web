@@ -25,7 +25,16 @@ function getOptions(msg) {
     let options = msg.split(" ");
     options.shift();
 
-    return options;
+    optionsObjs = [];
+
+    options.forEach(function (option) {
+        optionsObjs.push({
+            value: option,
+            votes: 0
+        })
+    });
+
+    return optionsObjs;
 }
 
 function makePoll(message) {
@@ -39,7 +48,7 @@ function makePoll(message) {
     let html = "";
 
     poll.options.forEach(function (option) {
-        html += `<li><input type="radio" name="poll-${poll.index}">${option}</li>`
+        html += `<li><input type="radio" name="poll-${poll.index}" value="${option.value}">${option.value} <span class="votes">${option.votes}</span></li>`
     });
 
     return `<ol>${html}</ol>`
@@ -51,6 +60,8 @@ io.on('connection', function(socket){
     });
 
     socket.on('chat poll', function(msg){
+        console.log(polls);
+
         let html = makePoll(msg);
         io.emit('chat poll', html);
     });

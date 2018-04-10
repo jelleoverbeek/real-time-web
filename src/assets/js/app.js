@@ -12,7 +12,7 @@
             socket.emit('chat message', message);
         }
 
-        this.querySelector("input").value = "";
+        //this.querySelector("input").value = "";
     });
 
     socket.on('chat message', function(message){
