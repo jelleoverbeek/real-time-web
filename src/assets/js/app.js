@@ -19,8 +19,7 @@
         document.querySelector("#messages").insertAdjacentHTML('beforeend', `<li>${message}</li>`)
     });
 
-    socket.on('chat poll', function(message){
-        let html = message;
+    socket.on('chat poll', function(html){
         document.querySelector("#messages").insertAdjacentHTML('beforeend', html)
     });
 

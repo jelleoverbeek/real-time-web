@@ -30,16 +30,16 @@ function getOptions(msg) {
 
 function makePoll(message) {
     const poll = {
-        index: polls.length + 1,
+        index: polls.length,
         options: getOptions(message)
     };
 
     polls.push(poll);
 
-    let html;
+    let html = "";
 
     poll.options.forEach(function (option) {
-        html += `<li><input type="radio" name="poll-${poll.index}"> ${option} </li>`
+        html += `<li><input type="radio" name="poll-${poll.index}">${option}</li>`
     });
 
     return `<ol>${html}</ol>`
@@ -51,10 +51,7 @@ io.on('connection', function(socket){
     });
 
     socket.on('chat poll', function(msg){
-        html = makePoll(msg);
-
-        console.log(polls);
-
+        let html = makePoll(msg);
         io.emit('chat poll', html);
     });
 });
