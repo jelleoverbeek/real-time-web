@@ -18,14 +18,44 @@ app.get('/', function(req, res) {
     })
 });
 
+const polls = [];
+
+
+function getOptions(msg) {
+    let options = msg.split(" ");
+    options.shift();
+
+    return options;
+}
+
+function makePoll(message) {
+    const poll = {
+        index: polls.length + 1,
+        options: getOptions(message)
+    };
+
+    polls.push(poll);
+
+    let html;
+
+    poll.options.forEach(function (option) {
+        html += `<li><input type="radio" name="poll-${poll.index}"> ${option} </li>`
+    });
+
+    return `<ol>${html}</ol>`
+}
+
 io.on('connection', function(socket){
     socket.on('chat message', function(msg){
         io.emit('chat message', msg);
     });
 
     socket.on('chat poll', function(msg){
-        console.log(msg);
-        io.emit('chat poll', msg);
+        html = makePoll(msg);
+
+        console.log(polls);
+
+        io.emit('chat poll', html);
     });
 });
 
