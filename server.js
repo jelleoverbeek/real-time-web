@@ -20,6 +20,13 @@ app.get('/', function(req, res) {
 
 const polls = [];
 
+function setVotes(poll) {
+    const currentPoll = polls[poll.index];
+    let currentOption = currentPoll.options[poll.choice];
+    currentOption.votes++;
+
+    return currentPoll
+}
 
 function getOptions(msg) {
     let options = msg.split(" ");
@@ -66,6 +73,11 @@ function makePoll(message) {
 }
 
 io.on('connection', function(socket){
+    socket.on('chat vote', function(msg){
+        let poll = setVotes(msg);
+        io.emit('chat vote', poll);
+    });
+
     socket.on('chat message', function(msg){
         io.emit('chat message', msg);
     });

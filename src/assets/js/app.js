@@ -1,8 +1,18 @@
 (function () {
     const socket = io();
 
-    function vote() {
-        console.log(this.id);
+    function vote(pollIndex, pollEl) {
+        let optionIndex = pollEl.id.split("item");
+        optionIndex = optionIndex[1] * 1;
+
+        console.log(optionIndex);
+
+        const obj = {
+            index: pollIndex,
+            choice: optionIndex
+        };
+
+        socket.emit('chat vote', obj);
     }
 
     document.querySelector("form").addEventListener("submit", function(ev) {
@@ -18,6 +28,10 @@
         //this.querySelector("input").value = "";
     });
 
+    socket.on('chat vote', function(poll){
+        console.log(poll)
+    });
+
     socket.on('chat message', function(message){
         document.querySelector("#messages").insertAdjacentHTML('beforeend', `<li>${message}</li>`)
     });
@@ -30,7 +44,9 @@
         let pollOptions = pollEl.querySelectorAll(".poll-option");
 
         pollOptions.forEach(function (pollOption) {
-            pollOption.addEventListener("change", vote, false)
+            pollOption.addEventListener("change", function (ev) {
+                vote(poll.obj.index, this)
+            })
         });
     });
 
