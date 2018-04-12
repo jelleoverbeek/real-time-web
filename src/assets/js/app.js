@@ -69,7 +69,7 @@
         socket.emit('chat vote', obj);
     }
 
-    document.querySelector(".text-bar").addEventListener("submit", function(ev) {
+    document.querySelector(".input-bar").addEventListener("submit", function(ev) {
         ev.preventDefault();
         const message = this.querySelector("input").value;
 
@@ -87,12 +87,12 @@
     });
 
     socket.on('chat message', function(message){
-        document.querySelector("#messages").insertAdjacentHTML('beforeend', `<li>${message}</li>`)
+        document.querySelector(".messages").insertAdjacentHTML('beforeend', `<li>${message}</li>`)
     });
 
     socket.on('chat poll', function(poll){
         const message = "<li>" + getPollTemplate(poll) + "</li>";
-        document.querySelector("#messages").insertAdjacentHTML('beforeend', message);
+        document.querySelector(".messages").insertAdjacentHTML('beforeend', message);
         addEventToPoll(poll);
     });
 

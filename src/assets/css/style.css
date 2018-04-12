@@ -7,38 +7,57 @@ body {
     font: 1em Helvetica, Arial;
 }
 
+.chat-box {
+    max-width: 36rem;
+    margin: 4rem auto;
+    background: #D8E0E6;
+    box-shadow: 0 2px .875rem 0 rgba(0,0,0,0.07);
+    border-radius: .5rem;
+    padding: 1rem;
+}
+
+
 .text-bar {
-    background: #000;
-    padding: 3px;
-    position: fixed;
-    bottom: 0;
+    display: flex;
+    padding: .5rem;
     width: 100%;
 }
 
-.text-bar input {
+.input-bar input {
+    width: calc(80% - 1rem);
+    height: 3rem;
     border: 0;
-    padding: 10px;
-    width: 90%;
-    margin-right: .5%;
+    border-radius: .25rem;
+    margin-right: 1rem;
+    padding: 1rem;
+    font-size: 1rem;
 }
 
-.text-bar button {
-    width: 9%;
-    background: rgb(130, 224, 255);
+.input-bar button {
+    width: 20%;
     border: none;
-    padding: 10px;
+    height: 3rem;
+    border-radius: .25rem;
+    background: #21A4F8;
+    color: white;
+    text-transform: uppercase;
+    font-size: .875rem;
 }
 
-#messages {
+.messages {
+    background: #fff;
+    border-radius: .25rem;
     list-style-type: none;
-    margin: 0;
     padding: 0;
+    overflow: scroll;
+    height: 22rem;
+    margin: 0 0 1rem 0;
 }
 
-#messages li {
-    padding: 5px 10px;
+.messages li {
+    padding: 1em;
 }
 
-#messages > li:nth-child(odd) {
-    background: #eee;
+.messages > li:nth-child(even) {
+    background: #F4F6F8;
 }

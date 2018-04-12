@@ -2,10 +2,11 @@
 
 {% block content %}
 
-<ul id="messages">
-    {% for item in log.messages %}
-    <li>
-        {% if item.type == "poll" %}
+<div class="chat-box">
+    <ul class="messages">
+        {% for item in log.messages %}
+        <li>
+            {% if item.type == "poll" %}
             <form id="poll-{{item.pollIndex}}" class="poll">
                 <ol>
                     {% for option in log.polls[item.pollIndex].options %}
@@ -19,15 +20,16 @@
                     {% endfor %}
                 </ol>
             </form>
-        {% else %}
+            {% else %}
             {{ item.msg }}
-        {% endif %}
-    </li>
-    {% endfor %}
-</ul>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
 
-<form class="text-bar" action="">
-    <input id="m" autocomplete="off" value="/poll optie1 optie2 optie3"/><button>Send</button>
-</form>
+    <form class="input-bar" action="">
+        <input id="m" autocomplete="off" autofocus/><button>Send</button>
+    </form>
+</div>
 
 {% endblock %}
