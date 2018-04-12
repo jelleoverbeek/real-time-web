@@ -1,6 +1,13 @@
 (function () {
     const socket = io();
 
+    function doScrolling() {
+        let messagesWrapper = document.querySelector(".messages");
+        let messages = messagesWrapper.querySelectorAll("li");
+        let elementY = messages[messages.length-1].offsetTop;
+        messagesWrapper.scrollTo(0, elementY);
+    }
+
     function initPolls() {
         const polls = document.querySelectorAll(".poll");
 
@@ -87,15 +94,18 @@
     });
 
     socket.on('chat message', function(message){
-        document.querySelector(".messages").insertAdjacentHTML('beforeend', `<li>${message}</li>`)
+        document.querySelector(".messages").insertAdjacentHTML('beforeend', `<li>${message}</li>`);
+        doScrolling();
     });
 
     socket.on('chat poll', function(poll){
         const message = "<li>" + getPollTemplate(poll) + "</li>";
         document.querySelector(".messages").insertAdjacentHTML('beforeend', message);
         addEventToPoll(poll);
+        doScrolling();
     });
 
     initPolls();
+    doScrolling();
 
 })();

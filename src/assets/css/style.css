@@ -61,3 +61,25 @@ body {
 .messages > li:nth-child(even) {
     background: #F4F6F8;
 }
+
+.votes {
+    display: inline-block;
+    text-align: center;
+    background: #21A4F8;
+    padding: .25rem .5rem;
+    color: #fff;
+    border-radius: 2rem;
+    margin-left: .25rem;
+}
+
+.poll ol {
+    padding-left: 1.1rem;
+}
+
+.poll li {
+    padding: .5rem 0 0 .5rem;
+}
+
+.poll label {
+    margin-left: .25rem;
+}
