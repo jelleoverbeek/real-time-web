@@ -2,7 +2,7 @@
 
 A realtime web app based on the socket.io dependency. A simple chat with an feature to add polls. When connected with another computer you can see eachothers votes.
 
-![Preview of the app](https://d.pr/i/ZfvGat+)
+![Preview of the app](https://d.pr/i/JoMJBb+)
 > A preview of the app
 
 
