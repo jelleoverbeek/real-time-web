@@ -2,8 +2,14 @@
 
 A realtime web app based on the socket.io dependency. A simple chat with an feature to add polls. When connected with another computer you can see eachothers votes.
 
-![Screenshot of the app](src/assets/images/screenshot.png)
-> A screenshot of the app
+![Preview of the app](https://d.pr/i/ZfvGat+)
+> A preview of the app
+
+
+
+#### Demo: [chat-poll.herokuapp.com](https://chat-poll.herokuapp.com/)
+
+
 
 ## Background
 
@@ -57,7 +63,7 @@ npm install
 
 **3. Build and start server:**
 ```
-node server.js
+npm start
 ```
 
 **4. Open the app**
