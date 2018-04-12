@@ -3,7 +3,13 @@
 {% block content %}
 
 <ul id="messages">
-
+    {% for item in log %}
+        {% if item.type == "poll" %}
+            <li>{{ item.pollIndex }}</li>
+        {% else %}
+            <li>{{ item.msg }}</li>
+        {% endif %}
+    {% endfor %}
 </ul>
 
 <form class="text-bar" action="">
