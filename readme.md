@@ -22,6 +22,11 @@ This app is a basic chat app. You can send eachother messages. Next to this you 
 /poll optie1 optie2 optie3
 ```
 
+## Prerequisites
+* Git
+* Node
+* NPM
+
 ## TO DO
 
 * Add styling
