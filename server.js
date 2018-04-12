@@ -12,20 +12,23 @@ nunjucks.configure('src/views', {
 
 app.use(express.static(__dirname + '/src/assets'));
 
-app.get('/', function(req, res) {
-    res.render('index.html', {
+const log = {
+    polls: [],
+    messages: []
+};
 
-    })
-});
-
-const polls = [];
-
-function setVotes(poll) {
-    const currentPoll = polls[poll.index];
+function setVotes(poll, client) {
+    const currentPoll = log.polls[poll.index];
     let currentOption = currentPoll.options[poll.choice];
-    currentOption.votes++;
 
-    console.log(currentPoll);
+    currentPoll.options.forEach(function (option) {
+        const voteIndex = option.votes.indexOf(client);
+        if (voteIndex >= 0) {
+            option.votes.splice(voteIndex, 1);
+        }
+    });
+
+    currentOption.votes.push(client);
 
     return {
         obj: currentPoll,
@@ -43,7 +46,7 @@ function getOptions(msg) {
         optionsObjs.push({
             index: optionsObjs.length,
             value: option,
-            votes: 0
+            votes: []
         })
     });
 
@@ -52,29 +55,47 @@ function getOptions(msg) {
 
 function makePoll(message) {
     const poll = {
-        index: polls.length,
+        index: log.polls.length,
         options: getOptions(message)
     };
 
-    polls.push(poll);
+    log.polls.push(poll);
 
     return poll
 }
 
 io.on('connection', function(socket){
+
     socket.on('chat vote', function(msg){
-        let poll = setVotes(msg);
+        let poll = setVotes(msg, socket.id);
         io.emit('chat vote', poll);
     });
 
     socket.on('chat message', function(msg){
+        log.messages.push({
+            type: "chat",
+            msg: msg
+        });
+
         io.emit('chat message', msg);
     });
 
     socket.on('chat poll', function(msg){
         let poll = makePoll(msg);
+
+        log.messages.push({
+            type: "poll",
+            pollIndex: poll.index
+        });
+
         io.emit('chat poll', poll);
     });
+});
+
+app.get('/', function(req, res) {
+    res.render('index.html', {
+        log: log
+    })
 });
 
 http.listen(3000, function(){

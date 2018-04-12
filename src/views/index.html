@@ -3,7 +3,27 @@
 {% block content %}
 
 <ul id="messages">
-
+    {% for item in log.messages %}
+    <li>
+        {% if item.type == "poll" %}
+            <form id="poll-{{item.pollIndex}}" class="poll">
+                <ol>
+                    {% for option in log.polls[item.pollIndex].options %}
+                    <li>
+                        <input id="poll{{item.pollIndex}}-item{{option.index}}" type="radio" class="poll-option" name="poll-{{item.pollIndex}}" value="{{option.value}}">
+                        <label for="poll{{item.pollIndex}}-item{{option.index}}">
+                            {{option.value}}
+                            <span class="votes">{{option.votes.length}}</span>
+                        </label>
+                    </li>
+                    {% endfor %}
+                </ol>
+            </form>
+        {% else %}
+            {{ item.msg }}
+        {% endif %}
+    </li>
+    {% endfor %}
 </ul>
 
 <form class="text-bar" action="">
