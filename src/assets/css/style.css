@@ -19,6 +19,10 @@ body {
     padding: 1rem;
 }
 
+img, iframe, video {
+    max-width: 100%;
+    height: auto;
+}
 
 .text-bar {
     display: flex;
