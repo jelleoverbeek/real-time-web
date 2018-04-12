@@ -12,18 +12,13 @@ nunjucks.configure('src/views', {
 
 app.use(express.static(__dirname + '/src/assets'));
 
-const polls = [];
 const log = {
     polls: [],
-    messages: [
-        { type: 'chat', msg: 'test' },
-        { type: 'poll', pollIndex: 0 },
-        { type: 'poll', pollIndex: 1 }
-    ]
+    messages: []
 };
 
 function setVotes(poll, client) {
-    const currentPoll = polls[poll.index];
+    const currentPoll = log.polls[poll.index];
     let currentOption = currentPoll.options[poll.choice];
 
     currentPoll.options.forEach(function (option) {
@@ -60,22 +55,16 @@ function getOptions(msg) {
 
 function makePoll(message) {
     const poll = {
-        index: polls.length,
+        index: log.polls.length,
         options: getOptions(message)
     };
 
-    polls.push(poll);
+    log.polls.push(poll);
 
     return poll
 }
 
 io.on('connection', function(socket){
-
-    console.log('client connected');
-
-    socket.on('disconnect', function () {
-        console.log('client disconnected');
-    });
 
     socket.on('chat vote', function(msg){
         let poll = setVotes(msg, socket.id);
@@ -83,13 +72,10 @@ io.on('connection', function(socket){
     });
 
     socket.on('chat message', function(msg){
-
-        log.push({
+        log.messages.push({
             type: "chat",
             msg: msg
         });
-
-        console.log(log);
 
         io.emit('chat message', msg);
     });
@@ -97,12 +83,10 @@ io.on('connection', function(socket){
     socket.on('chat poll', function(msg){
         let poll = makePoll(msg);
 
-        log.push({
+        log.messages.push({
             type: "poll",
             pollIndex: poll.index
         });
-
-        console.log(log);
 
         io.emit('chat poll', poll);
     });
