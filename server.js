@@ -13,11 +13,14 @@ nunjucks.configure('src/views', {
 app.use(express.static(__dirname + '/src/assets'));
 
 const polls = [];
-const log = [
-    { type: 'chat', msg: 'test' },
-    { type: 'poll', pollIndex: 0 },
-    { type: 'poll', pollIndex: 1 }
-];
+const log = {
+    polls: [],
+    messages: [
+        { type: 'chat', msg: 'test' },
+        { type: 'poll', pollIndex: 0 },
+        { type: 'poll', pollIndex: 1 }
+    ]
+};
 
 function setVotes(poll, client) {
     const currentPoll = polls[poll.index];
@@ -107,8 +110,7 @@ io.on('connection', function(socket){
 
 app.get('/', function(req, res) {
     res.render('index.html', {
-        log: log,
-        polls: polls
+        log: log
     })
 });
 

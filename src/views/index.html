@@ -5,7 +5,12 @@
 <ul id="messages">
     {% for item in log %}
         {% if item.type == "poll" %}
-            <li>{{ item.pollIndex }}</li>
+            {{ item.pollIndex }}
+            <ol>
+                {% for option in poll.options %}
+                    <li><input type="radio" name="poll-1" id="optie-1">{{ option.value }}</li>
+                {% endfor %}
+            </ol>
         {% else %}
             <li>{{ item.msg }}</li>
         {% endif %}
