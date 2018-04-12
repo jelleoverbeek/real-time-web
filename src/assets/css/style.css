@@ -4,7 +4,10 @@
 }
 
 body {
-    font: 1em Helvetica, Arial;
+    font-family: "AcuminPro-Regular", Helvetica, Arial, sans-serif;
+    font-size: 1.125rem;
+    color: #3C465D;
+    line-height: 1.4;
 }
 
 .chat-box {
@@ -70,6 +73,7 @@ body {
     color: #fff;
     border-radius: 2rem;
     margin-left: .25rem;
+    height: 29px;
 }
 
 .poll ol {
