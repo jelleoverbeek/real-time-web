@@ -6,7 +6,7 @@
 
         poll.obj.options.forEach(function (option) {
             const votesEl = pollEl.querySelector(`#poll${poll.obj.index}-item${option.index} + label .votes`);
-            votesEl.innerText = option.votes;
+            votesEl.innerText = option.votes.length;
         });
     }
 
@@ -29,7 +29,7 @@
                         <input id="poll${poll.index}-item${option.index}" type="radio" class="poll-option" name="poll-${poll.index}" value="${option.value}">
                         <label for="poll${poll.index}-item${option.index}">
                             ${option.value}
-                            <span class="votes">${option.votes}</span>
+                            <span class="votes">${option.votes.length}</span>
                         </label>
                     </li>`
         });

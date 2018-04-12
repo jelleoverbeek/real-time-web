@@ -20,12 +20,18 @@ app.get('/', function(req, res) {
 
 const polls = [];
 
-function setVotes(poll) {
+function setVotes(poll, client) {
     const currentPoll = polls[poll.index];
     let currentOption = currentPoll.options[poll.choice];
-    currentOption.votes++;
 
-    console.log(currentPoll);
+    currentPoll.options.forEach(function (option) {
+        const voteIndex = option.votes.indexOf(client);
+        if (voteIndex >= 0) {
+            option.votes.splice(voteIndex, 1);
+        }
+    });
+
+    currentOption.votes.push(client);
 
     return {
         obj: currentPoll,
@@ -43,7 +49,7 @@ function getOptions(msg) {
         optionsObjs.push({
             index: optionsObjs.length,
             value: option,
-            votes: 0
+            votes: []
         })
     });
 
@@ -62,8 +68,15 @@ function makePoll(message) {
 }
 
 io.on('connection', function(socket){
+
+    console.log('client connected');
+
+    socket.on('disconnect', function () {
+        console.log('client disconnected');
+    });
+
     socket.on('chat vote', function(msg){
-        let poll = setVotes(msg);
+        let poll = setVotes(msg, socket.id);
         io.emit('chat vote', poll);
     });
 
